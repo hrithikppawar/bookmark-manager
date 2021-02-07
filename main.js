@@ -77,7 +77,7 @@ function addBookmark(e) {
     tagList.appendChild(li);
   }
 
-  let element = `<td>${bookmarks.length}<a class="mark-remove" href="javascript: bookmarkRemove(${data.bookmarkCount})">X</a></td><td><a class="bookmark-link" href="${url}">${title}</a></td><td>${category}</td><td>${tagList.outerHTML}</td><td>${today}</td>`;
+  let element = `<td>${bookmarks.length}<a class="mark-remove" href="javascript: bookmarkRemove(${data.bookmarkCount})">X</a></td><td><a class="bookmark-link" href="${url}" target="_blank">${title}</a></td><td>${category}</td><td>${tagList.outerHTML}</td><td>${today}</td>`;
 
   tr.innerHTML = element;
   tbody.appendChild(tr);
@@ -103,7 +103,7 @@ function renderBookmark() {
       tagList.appendChild(li);
     }
     let sr = Number(i) + 1;
-    let element = `<td>${sr}<a class="mark-remove" href="javascript: bookmarkRemove(${bookmarks[i].bookmarkCount})">X</a></td><td><a class="bookmark-link" href="${bookmarks[i].url}">${bookmarks[i].title}</a></td><td>${bookmarks[i].category}</td><td>${tagList.outerHTML}</td><td>${bookmarks[i].date}</td>`;
+    let element = `<td>${sr}<a class="mark-remove" href="javascript: bookmarkRemove(${bookmarks[i].bookmarkCount})">X</a></td><td><a class="bookmark-link" href="${bookmarks[i].url}" target="_blank">${bookmarks[i].title}</a></td><td>${bookmarks[i].category}</td><td>${tagList.outerHTML}</td><td>${bookmarks[i].date}</td>`;
     let tr = document.createElement("tr");
     tr.innerHTML = element;
     tablebody.appendChild(tr);
