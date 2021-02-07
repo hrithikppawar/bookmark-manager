@@ -1,0 +1,86 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f4f4f4;
+}
+
+.clr {
+  clear: both;
+}
+
+nav {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: thistle;
+}
+
+#heading {
+  color: white;
+}
+
+main {
+  width: 80%;
+  margin: 20px auto;
+}
+
+main .container {
+  background-color: #fff;
+  border: 1px solid thistle;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+
+.content-title {
+  text-align: center;
+  color: rgb(94, 7, 94);
+  margin-top: 10px;
+}
+
+/* some */
+ul.tag-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+
+ul.tag-list li {
+  background-color: thistle;
+  float: left;
+  border-radius: 5px;
+  padding: 3px;
+  margin: 3px;
+}
+
+ul.tag-list li a {
+  text-decoration: none;
+  color: rgb(247, 9, 9);
+  padding: 2px;
+  margin: 2px;
+}
+
+ul.tag-list li a:hover {
+  color: white;
+}
+
+input#submit {
+  background-color: thistle;
+  font-weight: bold;
+}
+
+.bookmark-link {
+  text-decoration: none;
+  color: rgb(94, 7, 94);
+}
+
+.mark-remove {
+  text-decoration: none;
+  color: black;
+  background-color: thistle;
+  border-radius: 50%;
+  padding: 2px;
+  margin-left: 10px;
+}
