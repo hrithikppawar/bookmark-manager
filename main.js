@@ -1,7 +1,28 @@
 let tagsInput = document.querySelector("input#tags");
 let tagsList = document.querySelector("ul.tag-list");
+
+// if (document.getElementsByClassName("mark-remove")) {
+//   let remButtons = document.getElementsByClassName("mark-remove");
+//   for (let button of remButtons) {
+//     button.addEventListener("click", () => {
+//       bookmarkRemove(button.value);
+//     });
+//   }
+// }
+
 let items = [];
+
+// Get Data From Local storage
 let bookmarks;
+let bookmarkCount;
+
+if (!localStorage.getItem("bookmarkCount")) {
+  localStorage.setItem("bookmarkCount", "0");
+  bookmarkCount = 0;
+} else {
+  bookmarkCount = parseInt(localStorage.getItem("bookmarkCount"));
+}
+
 if (!localStorage.getItem("bookmarks")) {
   localStorage.setItem("bookmarks", JSON.stringify([]));
   bookmarks = [];
@@ -10,8 +31,7 @@ if (!localStorage.getItem("bookmarks")) {
   renderBookmark();
 }
 
-let bookmarkCount = bookmarks.length + 1;
-
+// Tag Input Event
 tagsInput.addEventListener("keyup", tagEvent);
 function tagEvent(e) {
   if (e.key === ",") {
@@ -31,6 +51,7 @@ function tagEvent(e) {
   }
 }
 
+// Tag Render
 function render() {
   tagsList.innerHTML = "";
   items.map((item, index) => {
@@ -38,11 +59,13 @@ function render() {
   });
 }
 
+// Tag Remove
 function remove(i) {
   items = items.filter((item) => items.indexOf(item) !== i);
   render();
 }
 
+// Event Listener for form submmition
 let form = document.getElementById("bookmark-form");
 
 form.addEventListener("submit", addBookmark);
@@ -69,9 +92,11 @@ function addBookmark(e) {
   };
   bookmarks.push(data);
   localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
-  console.log("Data Added");
+  localStorage.setItem("bookmarkCount", String(bookmarkCount));
+  console.log("Data Added of id", bookmarkCount);
 
   renderBookmark();
+  addRemoveEvent();
 
   // console.log(title + " " + url + " " + category + " " + today + " ", items);
 
@@ -102,6 +127,17 @@ function addBookmark(e) {
   render();
 }
 
+// Remove bookmark event handler
+function addRemoveEvent() {
+  let remButtons = document.getElementsByClassName("mark-remove");
+  for (let button of remButtons) {
+    button.addEventListener("click", () => {
+      bookmarkRemove(button.value);
+    });
+  }
+}
+
+// Rendering Bookmark to the table
 function renderBookmark() {
   let tablebody = document.createElement("tbody");
   for (i in bookmarks) {
@@ -115,7 +151,7 @@ function renderBookmark() {
       tagList.appendChild(li);
     }
     let sr = Number(i) + 1;
-    let element = `<td>${sr}<a class="mark-remove" href="javascript: bookmarkRemove(${bookmarks[i].bookmarkCount})">X</a></td><td><a class="bookmark-link" href="${bookmarks[i].url}" target="_blank">${bookmarks[i].title}</a></td><td>${bookmarks[i].category}</td><td>${tagList.outerHTML}</td><td>${bookmarks[i].date}</td>`;
+    let element = `<td class="d-flex">${sr}<button class="mark-remove" value="${bookmarks[i].bookmarkCount}">X</button></td><td><a class="bookmark-link" href="${bookmarks[i].url}" target="_blank">${bookmarks[i].title}</a></td><td>${bookmarks[i].category}</td><td>${tagList.outerHTML}</td><td>${bookmarks[i].date}</td>`;
     let tr = document.createElement("tr");
     tr.innerHTML = element;
     tablebody.appendChild(tr);
@@ -124,6 +160,7 @@ function renderBookmark() {
   tbody.outerHTML = tablebody.outerHTML;
 }
 
+// Removing bookmark from table
 function bookmarkRemove(id) {
   // console.log(bookmarks);
   bookmarks = bookmarks.filter((data) => data.bookmarkCount != id);
@@ -131,4 +168,5 @@ function bookmarkRemove(id) {
 
   // console.log(bookmarks);
   renderBookmark();
+  addRemoveEvent();
 }
