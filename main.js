@@ -1,8 +1,16 @@
 let tagsInput = document.querySelector("input#tags");
 let tagsList = document.querySelector("ul.tag-list");
 let items = [];
-let bookmarks = [];
-let bookmarkCount = 1;
+let bookmarks;
+if (!localStorage.getItem("bookmarks")) {
+  localStorage.setItem("bookmarks", JSON.stringify([]));
+  bookmarks = [];
+} else {
+  bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+  renderBookmark();
+}
+
+let bookmarkCount = bookmarks.length + 1;
 
 tagsInput.addEventListener("keyup", tagEvent);
 function tagEvent(e) {
@@ -60,27 +68,31 @@ function addBookmark(e) {
     tags: items,
   };
   bookmarks.push(data);
+  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  console.log("Data Added");
+
+  renderBookmark();
 
   // console.log(title + " " + url + " " + category + " " + today + " ", items);
 
-  let tr = document.createElement("tr");
+  // let tr = document.createElement("tr");
 
-  let tbody = document.getElementsByTagName("tbody")[0];
+  // let tbody = document.getElementsByTagName("tbody")[0];
 
-  let tagList = document.createElement("ul");
-  tagList.className = "tag-list";
+  // let tagList = document.createElement("ul");
+  // tagList.className = "tag-list";
 
-  for (item in items) {
-    let li = document.createElement("li");
-    li.className = "tags-item";
-    li.textContent = items[item];
-    tagList.appendChild(li);
-  }
+  // for (item in items) {
+  //   let li = document.createElement("li");
+  //   li.className = "tags-item";
+  //   li.textContent = items[item];
+  //   tagList.appendChild(li);
+  // }
 
-  let element = `<td>${bookmarks.length}<a class="mark-remove" href="javascript: bookmarkRemove(${data.bookmarkCount})">X</a></td><td><a class="bookmark-link" href="${url}" target="_blank">${title}</a></td><td>${category}</td><td>${tagList.outerHTML}</td><td>${today}</td>`;
+  // let element = `<td>${bookmarks.length}<a class="mark-remove" href="javascript: bookmarkRemove(${data.bookmarkCount})">X</a></td><td><a class="bookmark-link" href="${url}" target="_blank">${title}</a></td><td>${category}</td><td>${tagList.outerHTML}</td><td>${today}</td>`;
 
-  tr.innerHTML = element;
-  tbody.appendChild(tr);
+  // tr.innerHTML = element;
+  // tbody.appendChild(tr);
 
   document.getElementById("title").value = "";
   document.getElementById("url").value = "";
@@ -115,6 +127,8 @@ function renderBookmark() {
 function bookmarkRemove(id) {
   // console.log(bookmarks);
   bookmarks = bookmarks.filter((data) => data.bookmarkCount != id);
+  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+
   // console.log(bookmarks);
   renderBookmark();
 }
